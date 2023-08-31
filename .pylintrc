@@ -1,0 +1,28 @@
+[MASTER]
+init-hook='import sys, os; sys.path.append(f"{os.getcwd()}/beam")'
+ignore=.venv,venv,_version.py,versioneer.py
+
+[MESSAGES CONTROL]
+disable=W0511,
+        R,
+        missing-timeout,
+        line-too-long,
+        too-few-public-methods,
+        logging-fstring-interpolation,
+        missing-module-docstring,
+        missing-class-docstring,
+        missing-function-docstring,
+        too-many-instance-attributes,
+        too-many-return-statements,
+        trailing-whitespace,
+        unspecified-encoding,
+        import-error,
+        use-dict-literal,
+        broad-exception-caught,
+        broad-exception-raised,
+        wildcard-import
+
+[FORMAT]
+max-line-length=240
+
+good-names=id,dn,i,e,ex,db,vm

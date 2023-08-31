@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Release
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.5.1
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+
+      - name: Run poetry install
+        run: |
+          set -ex
+          poetry install
+
+      - name: Build project for distribution
+        run: poetry build
+
+      - name: Check Version
+        id: check-version
+        run: |
+          echo version=$(poetry version --short)
+          echo version=$(poetry version --short) >> $GITHUB_OUTPUT
+          [[ "$(poetry version --short)" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || echo prerelease=true >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/*"
+          token: ${{ secrets.github_token }}
+          draft: false
+          prerelease: steps.check-version.outputs.prerelease == 'true'
+          tag: ${{ steps.check-version.outputs.version }}
+
+#      - name: Publish to PyPI
+#        env:
+#          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+#        run: poetry publish

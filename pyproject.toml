@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "beam"
+version = "0.1.0"
+description = "AWS SSM made easy"
+authors = ["Entitle I.O", "Avi Zetser <avi@entitle.io>", "Dennis Zagiansky <dennis@entitle.io>"]
+maintainers = ["Avi Zetser <avi@entitle.io>", "Dennis Zagiansky <dennis@entitle.io>"]
+license = "Apache-2.0"
+readme = "README.md"
+homepage = "beam.entitle.io"
+repository = "https://github.com/entitleio/beam"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Development Status :: 4 - Beta",
+    "Operating System :: OS Independent",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: Apache Software License",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+colorlog = "^6.7.0"
+boto3 = "^1.28.12"
+botocore = "^1.31.12"
+types-boto3 = "^1.0.2"
+aws-sso-lib = "^1.14.0"
+pyyaml = "^6.0.1"
+questionary = "^1.10.0"
+yamldataclassconfig = "^1.5.0"
+click = "^8.1.6"
+validators = "^0.20.0"
+rich = "^13.4.2"
+dynaconf = "^3.2.0"
+versioneer = "^0.29"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^2.13.8"
+parameterized = "^0.8.1"
+coverage = "^7.0"
+pytest = "^7.2.0"
+flake8 = "^6.0.0"
+mypy = "^1.0.0"
+types-requests = "^2.28.11.7"
+types-urllib3 = "^1.26.25.4"
+types-deprecated = "^1.2.9"
+types-retry = "^0.9.9"
+pre-commit = "^3.0.4"
+types-cachetools = "^5.3.0.2"
+bandit = "^1.7.5"
+flake8-quotes = "^3.3.2"
+types-pyyaml = "^6.0.12.9"
+
+[build-system]
+requires = ["setuptools", "poetry-core>=1.0.0", "versioneer[toml]"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+beam = 'beam.main:main'
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "beam/_version.py"
+versionfile_build = "beam/_version.py"
+tag_prefix = ""
+parentdir_prefix = "beam-"
