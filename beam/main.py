@@ -92,7 +92,7 @@ def run(config: str, force_scan: bool, eks: bool, rds: bool) -> None:
     config = os.path.realpath(config)
     print(Panel(
         Align.center(
-            '[bold yellow3]Beam[/bold yellow3] by [bold magenta]Entitle[/bold magenta] :vampire:'
+            '[bold yellow3]Beam[/bold yellow3] by [bold magenta]Entitle[/bold magenta] :comet:'
         ), border_style='yellow3'))
 
     # TODO: Create custom Command class and manage logs from there, support multi log levels
@@ -156,7 +156,7 @@ def version() -> None:
 
 
 def print_version() -> None:
-    print(f'[bold yellow3]Beam[/bold yellow3] [white]{__version__}[/white] by [bold magenta]Entitle[/bold magenta] :vampire:')
+    print(f'[bold yellow3]Beam[/bold yellow3] [white]{__version__}[/white] by [bold magenta]Entitle[/bold magenta] :comet:')
 
 
 def validate_prerequisites_and_exit() -> None:

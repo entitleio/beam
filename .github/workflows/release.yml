@@ -49,6 +49,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/*"
+          omitName: true
           token: ${{ secrets.github_token }}
           draft: false
           prerelease: steps.check-version.outputs.prerelease == 'true'

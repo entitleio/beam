@@ -4,20 +4,55 @@
 </a>
 </div>
 
-# Beam: AWS SSM Utility Tool
+# Beam: Securely Connect to Your Infrastructure
 
-![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+Beams helps you to connect easily & securely to internal AWS resources using AWS SSM Session Manager.
 
-[![Stable Version](https://img.shields.io/github/v/release/entitleio/beam)][PyPI Releases]
+**Currently supported infrastructure:**
+* AWS: SSM, EKS, RDS
+* _GCP: Coming soon 🎉_
 
-Beams helps you to connect easily & securely to internal AWS resources using AWS SSM Session Manager. 
+## Installation and initial configuration
 
-## Installation
-
-Beam releases are available as wheel packages for macOS, Windows and Linux on PyPI. Install it using pip:
+#### Step 1: Install Beam
+Start with installing beam
 ```shell
-pip install beam
+pip install https://github.com/entitleio/beam/releases/latest/download/beam.tar.gz
 ```
+
+#### Step 2: Configure SSO
+Run the following command to configure Single Sign-On (SSO):
+
+```shell
+beam configure --sso-url SSO_URL --sso-region SSO_REGION
+```
+Follow the Single Sign-On (SSO) and Multi-Factor Authentication (MFA) prompts until you approve.
+
+#### Step 3: Select Accounts and Permissions
+- Select the accounts you want to access.
+- Choose the permission sets you require.
+
+#### Step 4: Specify Regions and Infrastructure
+- Select the regions where your infrastructure is located.
+- Specify the regular expression (regex) for your bastion host.
+- Choose your default Kubernetes namespace.
+- Decide if you want to use Amazon Elastic Kubernetes Service (EKS) and specify the regex.
+- Decide if you want to connect to Amazon Relational Database Service (RDS).
+
+#### Step 5: Approve Configuration
+Approve the configuration. This will generate a configuration file in your current user folder.
+
+#### Step 6: Run Beam
+Now you can run the following command:
+
+```shell
+sudo beam run
+```
+*Note: The first run will take some time as it scans your entire infrastructure.*
+
+*Note: Beam requires sudo because it edits the hosts file.*
+
+Congratulations! You have successfully configured your DevOps environment.
 
 ## Documentation
 
@@ -39,5 +74,4 @@ Follow the [contributing guidelines](CONTRIBUTING.md) if you want to propose a c
   [Official Website]: https://beam.entitle.io
   [Documentation]: https://beam.entitle.io/docs
   [Issue Tracker]: https://github.com/entitleio/beam/issues
-  [Suggested Issues]: https://github.com/python-poetry/poetry/contribute
-  [Contributing Documentation]: https://python-poetry.org/docs/contributing
+  [Contributing Documentation]: CONTRIBUTING.md
