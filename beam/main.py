@@ -140,9 +140,6 @@ def run(config: str, force_scan: bool, eks: bool, rds: bool) -> None:
         for process in processes:
             process.kill()
 
-        # run 'pkill session-manager-plugin' to kill all ssm sessions
-        # subprocess.Popen(['pkill', 'session-manager-plugin'])
-
 
 @cli.command()
 @common_params

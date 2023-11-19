@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "beam"
-version = "0.1.2"
+version = "0.1.3"
 description = "AWS SSM made easy"
 authors = ["Entitle I.O", "Avi Zetser <avi@entitle.io>", "Dennis Zagiansky <dennis@entitle.io>"]
 maintainers = ["Avi Zetser <avi@entitle.io>", "Dennis Zagiansky <dennis@entitle.io>"]

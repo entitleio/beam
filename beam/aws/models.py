@@ -18,6 +18,7 @@ class Boto3SessionConfig(DataClassJsonMixin):
     _session: Optional[boto3.Session] = field(init=False, default=None, metadata=config(exclude=lambda x: True,
                                                                                         encoder=lambda x: None,
                                                                                         decoder=lambda x: None))
+    vpc_id: Optional[str] = None
 
     def get_session(self) -> boto3.Session:
         if self._session is None:
@@ -32,6 +33,7 @@ class AwsEksInstance:
     name: str
     endpoint: str
     arn: str
+    vpc_id: Optional[str] = None
 
 
 @dataclass
@@ -45,6 +47,7 @@ class AwsRdsInstance:
     identifier: str
     endpoint: str
     port: int
+    vpc_id: Optional[str] = None
 
     @property
     def local_port(self) -> int:

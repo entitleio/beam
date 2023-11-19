@@ -96,7 +96,7 @@ def get_all_eks_clusters(session: boto3.Session, tags: Optional[dict[str, str]] 
             if not match_tags(cluster['tags'], tags):
                 continue
 
-            eks_list.append(AwsEksInstance(cluster['name'], cluster['endpoint'], cluster['arn']))
+            eks_list.append(AwsEksInstance(cluster['name'], cluster['endpoint'], cluster['arn'], cluster['resourcesVpcConfig']['vpcId']))
         except (client.exceptions.ResourceNotFoundException, client.exceptions.InvalidParameterException):
             logger.exception(f'Error describing cluster {cluster_name}')
         except Exception as e:
@@ -144,19 +144,19 @@ def get_all_rds_resources(session: boto3.Session, tags: Optional[dict[str, str]]
             continue
         instance_resources.append(AwsRdsInstance(instance['DBInstanceIdentifier'],
                                                  instance['Endpoint']['Address'],
-                                                 int(instance['Endpoint']['Port']))
+                                                 int(instance['Endpoint']['Port']), instance['DBSubnetGroup']['VpcId'])
                                   )
     cluster_resources = []
     for cluster in available_clusters:
         # apply user filtering
         if name_regex:
-            if not fnmatch.fnmatch(cluster['DBInstanceIdentifier'], name_regex):
+            if not fnmatch.fnmatch(cluster['DBClusterIdentifier'], name_regex):
                 continue
 
         if not match_tags(cluster['TagList'], tags):
             continue
 
-        cluster_resources.append(AwsRdsInstance(cluster['DBInstanceIdentifier'],
+        cluster_resources.append(AwsRdsInstance(cluster['DBClusterIdentifier'],
                                                 cluster['Endpoint'],
                                                 int(cluster['Port']))
                                  )
@@ -225,10 +225,12 @@ def process_region(session_config: Boto3SessionConfig, region: str, beam_config:
 
     for bastion in region_bastions:
         for eks in ekss:
-            bastion.add_eks_instance(eks)
+            if eks.vpc_id == bastion.vpc_id:
+                bastion.add_eks_instance(eks)
 
         for rds in rdss:
-            bastion.add_rds_instance(rds)
+            if rds.vpc_id == bastion.vpc_id:
+                bastion.add_rds_instance(rds)
 
     return region_bastions
 
